@@ -1164,6 +1164,40 @@ impl RustAlphaBetaEngine {
             }
         }
 
+        // ProbCut: shallow search with raised beta on captures to detect likely cutoffs
+        if effective_depth >= 5
+            && !in_check_now
+            && beta.abs() < MATE_SCORE - 512
+        {
+            let probcut_beta = beta + 200;
+            let probcut_depth = effective_depth - 4;
+            let mut probcut_moves = self.scored_moves(board, tt_move, ply, true);
+            for idx in 0..probcut_moves.len() {
+                let Some(pc_move) = pick_next_move(&mut probcut_moves, idx) else {
+                    break;
+                };
+                if static_exchange_eval(board, pc_move) < 0 {
+                    continue;
+                }
+                let child = board.make_move_new(pc_move);
+                let child_hash = board_hash(&child);
+                repetition.push(child_hash);
+                let search = self.negamax(
+                    &child,
+                    probcut_depth,
+                    -probcut_beta,
+                    -probcut_beta + 1,
+                    ply + 1,
+                    repetition,
+                );
+                repetition.pop(child_hash);
+                let score = -search?;
+                if score >= probcut_beta {
+                    return Some(score);
+                }
+            }
+        }
+
         // Singular extension: if TT move is much better than alternatives, extend it
         let mut singular_move: Option<ChessMove> = None;
         if let (Some(entry), Some(tt_mv)) = (tt_entry, tt_move) {
