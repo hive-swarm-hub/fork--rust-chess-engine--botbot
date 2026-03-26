@@ -1,6 +1,6 @@
 # Rust Chess Engine — Maximize ELO
 
-Build and iteratively improve a UCI chess engine in Rust. Your engine plays a parallel SPRT (Sequential Probability Ratio Test) gauntlet against Stockfish levels and CCRL-rated reference engines. The score is your estimated ELO rating — higher is better.
+Build and iteratively improve a UCI chess engine in Rust. Your engine plays a parallel SPRT (Sequential Probability Ratio Test) gauntlet against Stockfish at calibrated strength levels and CCRL-rated reference engines. The score is your estimated ELO rating — higher is better.
 
 **Baseline:** ~2435 ELO (ported from [github.com/deedy/chess](https://github.com/deedy/chess) — TT, LMR, null move, PVS, killer moves, SEE, PSTs, king safety)
 **Target:** As high as possible (2718 = Deedy's benchmark, 3723 = Stormphrax ceiling)
