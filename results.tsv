@@ -82,3 +82,4 @@ f221e71	3112.4	35	discard	qsearch delta pruning 200->350: prune more captures to
 dfe9961	3303.2	38	discard	extend RFP to depth 5 with margin 400 (NNUE eval more reliable at higher depths)
 9573b83	3286.9	36	discard	tighten aspiration window 30cp -> 25cp
 4c18377	3276.0	35	discard	history pruning: skip quiet moves with hist < -4000 at depth<=5 before make_move
+e86011d	3264.8	38	discard	qsearch TT probe-only: cutoffs + TT move ordering, no storing
